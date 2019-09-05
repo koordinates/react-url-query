@@ -18,7 +18,24 @@ var config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env)
     })
-  ]
+  ],
+  externals: {
+    "react": {
+      "commonjs": "react",
+      "commonjs2": "react",
+      "amd": "react",
+    },
+    "react-dom": {
+      "commonjs": "react-dom",
+      "commonjs2": "react-dom",
+      "amd": "react-dom",
+    },
+    "react-router": {
+      "commonjs": "react-router",
+      "commonjs2": "react-router",
+      "amd": "react-router",
+    },
+  },
 };
 
 if (env === 'production') {

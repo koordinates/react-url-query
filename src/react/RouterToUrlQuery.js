@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { __RouterContext as RouterContext } from 'react-router';
 import configureUrlQuery from '../configureUrlQuery';
 
 /**
@@ -11,12 +12,26 @@ export default class RouterToUrlQuery extends Component {
     children: PropTypes.node,
   };
 
-  static contextTypes = {
-    router: PropTypes.object,
+  render() {
+    const { children } = this.props;
+
+    return (
+      <RouterContext.Consumer>
+        {router => <RouterToUrlQueryInternal children={children} router={router} />}
+      </RouterContext.Consumer>
+    );
+  }
+}
+
+
+class RouterToUrlQueryInternal extends Component {
+  static propTypes = {
+    children: PropTypes.node,
+    router: PropTypes.object
   };
 
   componentWillMount() {
-    const { router } = this.context;
+    const { router } = this.props;
 
     if (process.env.NODE_ENV === 'development' && !router) {
       // eslint-disable-next-line
